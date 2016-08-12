@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <script typet="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+        var exampleSocket = new WebSocket("ws://10.0.0.202:9502");
+        exampleSocket.onopen = function (event) {
+            exampleSocket.send("亲爱的服务器！我连上你啦！");
+        };
+        exampleSocket.onmessage = function (event) {
+            var chat_obj = $("#chat_content");
+            var length = chat_obj.children().length;
+            if ( length >= 9 ) {
+                chat_obj.find("p").first().remove();
+
+
+            }
+
+            $("#chat_content").append("<p>"+event.data+"</p>");
+        }
+    </script>
+</head>
+<body>
+<input  type="text" id="content">
+<button  onclick="exampleSocket.send( document.getElementById('content').value )">发送</button>
+<div style="border: 1px red solid; width: 500px;height: 400px" id="chat_content">
+
+</div>
+
+</body>
+</html>
